@@ -1,2 +1,1 @@
-Let's have LDM with 1 dataset with ID=test containing 1 attribute with ID=a1 and 1 fact with ID=f1.
-Write a MAQL metric calculating count of records (rows) in dataset test.
+I am now working with GoodData workspace "jacek_tpch_1g". Write a MAQL metric which calculate number of values in attribute "L shipinstruct".

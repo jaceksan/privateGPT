@@ -2,6 +2,7 @@
 import argparse
 import os
 from time import time
+import psutil
 
 from dotenv import load_dotenv
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
@@ -22,6 +23,11 @@ model_path = os.environ.get("MODEL_PATH")
 model_n_ctx = os.environ.get("MODEL_N_CTX")
 target_source_chunks = int(os.environ.get("TARGET_SOURCE_CHUNKS", 4))
 
+PREFIX_PROMPT = """
+Questions will relate to GoodData company, specifically to their logical data model and MAQL language.
+You should prefer sources stored in local vector database.
+"""
+
 
 def main():
     # Parse the command line arguments
@@ -34,9 +40,22 @@ def main():
     # Prepare the LLM
     match model_type:
         case "LlamaCpp":
-            llm = LlamaCpp(model_path=model_path, n_ctx=model_n_ctx, callbacks=callbacks, verbose=False)
+            llm = LlamaCpp(
+                model_path=model_path,
+                n_ctx=model_n_ctx,
+                callbacks=callbacks,
+                verbose=False,
+                n_threads=args.parallelism,
+            )
         case "GPT4All":
-            llm = GPT4All(model=model_path, n_ctx=model_n_ctx, backend="gptj", callbacks=callbacks, verbose=False)
+            llm = GPT4All(
+                model=model_path,
+                n_ctx=model_n_ctx,
+                backend="gptj",
+                callbacks=callbacks,
+                verbose=False,
+                n_threads=args.parallelism,
+            )
         case _:
             raise Exception(f"Model {model_type} not supported!")
 
@@ -49,12 +68,12 @@ def main():
         if query == "exit":
             break
         elif not query.strip():
-            print("Empty ")
+            print("\nEmpty query, do not execute it.")
             continue
 
         # Get the answer from the chain
         start = time()
-        res = qa(query)
+        res = qa(f"{PREFIX_PROMPT}\n{query}")
         answer, docs = res["result"], [] if args.hide_source else res["source_documents"]
 
         # Print the result
@@ -63,12 +82,15 @@ def main():
         print("\n> Answer:")
         print(answer)
         duration = int((time() - start) * 1000)
+        print(f"\n#####################################################################################")
         print(f"\n> Duration: {duration} ms")
+        print(f"\n#####################################################################################")
 
         # Print the relevant sources used for the answer
-        for document in docs:
-            print("\n> " + document.metadata["source"] + ":")
-            print(document.page_content)
+        if not args.hide_source:
+            for document in docs:
+                print("\n> " + document.metadata["source"] + ":")
+                print(document.page_content)
 
 
 def parse_arguments():
@@ -88,6 +110,12 @@ def parse_arguments():
         "-M",
         action="store_true",
         help="Use this flag to disable the streaming StdOut callback for LLMs.",
+    )
+
+    parser.add_argument(
+        "-p", "--parallelism", type=int,
+        help=f"How many threads can be used? Default={psutil.cpu_count(logical=False)}",
+        default=psutil.cpu_count(logical=False)
     )
 
     return parser.parse_args()

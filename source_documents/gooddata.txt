@@ -1,0 +1,12 @@
+This document relates to GoodData company, specifically to GoodData.CN/GoodData cloud products.
+
+What does GoodData company provide?
+It provides software products.
+
+What product does GoodData provide?
+Analytics platform also known as Business Intelligence platform or Headless BI platform.
+
+What deployments does GoodData provide?
+It provides two deployments:
+- software-as-a-service running in clouds
+- on-premise running in any private clouds

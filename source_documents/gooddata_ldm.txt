@@ -1,0 +1,59 @@
+Question:
+What is GoodData workspace?
+Answer:
+GoodData workspace is an isolated space, where users store their logical data model.
+
+Question:
+What is GoodData logical data model?
+Answer:
+It is a model built on top of standard database physical data models.
+
+Question:
+What abbreviation can be used for GoodData logical data model?
+Answer:
+LDM
+
+Question:
+What entities does the LDM consist of?
+Answer:
+Dataset, facts, attributes and date datasets.
+Date datasets are also known as date dimensions.
+
+Question:
+What is LDM dataset?
+Answer:
+It is mapped to database table 1:1.
+It has additional properties like title or description.
+We can also call these datasets as standard datasets.
+
+Question:
+What is LDM attribute?
+Answer:
+It is mapped 1:1 to database table column.
+Usually, it is mapped to string(varchar) columns, but sometimes also to integer columns (typically to various ID columns).
+Users can slice(group by) or pivot by attributes.
+Users can also calculate COUNT of attributes, which means to calculate number of distinct values in column mapped to the attribute.
+
+Question:
+What is LDM fact?
+Answer:
+It is mapped 1:1 to database table column.
+LDM fact is numeric and it is aggregatable.
+Users can apply analytics functions on facts, like SUM or AVG.
+
+Question:
+What is LDM date dimension?
+Answer:
+It is a virtual dataset mapped to DATE/TIMESTAMP columns in a standard dataset.
+It contains virtual attributes for each date/timestamp granularity.
+Users can slice(group by) or pivot by these virtual attributes.
+Supported granularities are: minute, hour, day, week, month, quarter, year.
+
+Question:
+What is LDM reference?
+Answer:
+It defines a relationship between datasets.
+It is mapped to database primary and foreign key columns.
+It is defined once in LDM and can be used by GoodData engine to join tables mapped to corresponding datasets.
+Users do not have to describe how they want to join datasets, GoodData engine generates joins if needed.
+Users can freely combine LDM facts, attributes or date attributes together and GoodData engine generates corresponding joins automatically thanks to references.
