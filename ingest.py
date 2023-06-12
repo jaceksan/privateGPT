@@ -23,6 +23,7 @@ from langchain.embeddings import HuggingFaceEmbeddings
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.vectorstores import Chroma
 from tqdm import tqdm
+from time import time
 
 from constants import CHROMA_SETTINGS
 
@@ -143,6 +144,7 @@ def does_vectorstore_exist(persist_directory: str) -> bool:
 
 def main():
     # Create embeddings
+    start = time()
     embeddings = HuggingFaceEmbeddings(model_name=embeddings_model_name)
 
     if does_vectorstore_exist(persist_directory):
@@ -171,7 +173,8 @@ def main():
     db.persist()
     db = None
 
-    print("Ingestion complete! You can now run privateGPT.py to query your documents")
+    duration = int((time() - start)*1000)
+    print(f"Ingestion complete, duration={duration} ms! You can now run privateGPT.py to query your documents")
 
 
 if __name__ == "__main__":

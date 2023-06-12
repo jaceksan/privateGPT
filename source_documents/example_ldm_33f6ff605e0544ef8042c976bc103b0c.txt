@@ -1,0 +1,67 @@
+This is an example of GoodData logical data model (LDM) for workspace with ID "33f6ff605e0544ef8042c976bc103b0c" and with title "jacek_tpch_1g":
+Dataset with ID "customer" has title "Customer".
+Dataset with ID "customer" has the following facts:
+- Fact with ID "c_acctbal" has title "C acctbal"
+Dataset with ID "customer" has the following attributes:
+- Attribute with ID "c_address" has title "C address"
+- Attribute with ID "c_comment" has title "C comment"
+- Attribute with ID "c_custkey" has title "C custkey"
+- Attribute with ID "c_mktsegment" has title "C mktsegment"
+- Attribute with ID "c_name" has title "C name"
+- Attribute with ID "c_phone" has title "C phone"
+Dataset with ID "lineitem" has title "Lineitem".
+Dataset with ID "lineitem" has the following facts:
+- Fact with ID "l_discount" has title "L discount"
+- Fact with ID "l_extendedprice" has title "L extendedprice"
+- Fact with ID "l_quantity" has title "L quantity"
+- Fact with ID "l_tax" has title "L tax"
+Dataset with ID "lineitem" has the following attributes:
+- Attribute with ID "l_comment" has title "L comment"
+- Attribute with ID "l_linenumber" has title "L linenumber"
+- Attribute with ID "l_linestatus" has title "L linestatus"
+- Attribute with ID "l_returnflag" has title "L returnflag"
+- Attribute with ID "l_shipinstruct" has title "L shipinstruct"
+- Attribute with ID "l_shipmode" has title "L shipmode"
+Dataset with ID "nation" has title "Nation".
+Dataset with ID "nation" has the following facts:
+Dataset with ID "nation" has the following attributes:
+- Attribute with ID "n_comment" has title "N comment"
+- Attribute with ID "n_name" has title "N name"
+- Attribute with ID "n_nationkey" has title "N nationkey"
+Dataset with ID "orders" has title "Orders".
+Dataset with ID "orders" has the following facts:
+- Fact with ID "o_totalprice" has title "O totalprice"
+Dataset with ID "orders" has the following attributes:
+- Attribute with ID "o_clerk" has title "O clerk"
+- Attribute with ID "o_comment" has title "O comment"
+- Attribute with ID "o_orderkey" has title "O orderkey"
+- Attribute with ID "o_orderpriority" has title "O orderpriority"
+- Attribute with ID "o_orderstatus" has title "O orderstatus"
+- Attribute with ID "o_shippriority" has title "O shippriority"
+Dataset with ID "part" has title "Part".
+Dataset with ID "part" has the following facts:
+- Fact with ID "p_retailprice" has title "P retailprice"
+Dataset with ID "part" has the following attributes:
+- Attribute with ID "p_brand" has title "P brand"
+- Attribute with ID "p_comment" has title "P comment"
+- Attribute with ID "p_container" has title "P container"
+- Attribute with ID "p_mfgr" has title "P mfgr"
+- Attribute with ID "p_name" has title "P name"
+- Attribute with ID "p_partkey" has title "P partkey"
+- Attribute with ID "p_size" has title "P size"
+- Attribute with ID "p_type" has title "P type"
+Dataset with ID "region" has title "Region".
+Dataset with ID "region" has the following facts:
+Dataset with ID "region" has the following attributes:
+- Attribute with ID "r_comment" has title "R comment"
+- Attribute with ID "r_name" has title "R name"
+- Attribute with ID "r_regionkey" has title "R regionkey"
+Dataset with ID "supplier" has title "Supplier".
+Dataset with ID "supplier" has the following facts:
+- Fact with ID "s_acctbal" has title "S acctbal"
+Dataset with ID "supplier" has the following attributes:
+- Attribute with ID "s_address" has title "S address"
+- Attribute with ID "s_comment" has title "S comment"
+- Attribute with ID "s_name" has title "S name"
+- Attribute with ID "s_phone" has title "S phone"
+- Attribute with ID "s_suppkey" has title "S suppkey"
