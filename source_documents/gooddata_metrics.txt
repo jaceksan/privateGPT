@@ -1,4 +1,4 @@
-This document relates to GoodData 2.0.
+This document relates to "GoodData Tiger platform".
 
 Question:
 What is GoodData MAQL?
@@ -26,14 +26,18 @@ Bad examples:
 - {nějaký text
 
 Question:
-How to calculate sum of LDM fact with ID fact1 with MAQL?
+Write a MAQL metric calculating sum of values in LDM fact price?
 Answer:
-SELECT SUM({fact/fact1})
+First we analyze LDM and find ID of fact with title closest to "price".
+Let's say it is "price".
+Then the metric is: SELECT SUM({fact/price})
 
 Question:
-How to calculate average of LDM fact with ID fact1 with MAQL?
+Write a MAQL metric calculating average value in LDM fact budget?
 Answer:
-SELECT AVG({fact/fact1})
+First we analyze LDM and find ID of fact with title closest to "budget".
+Let's say it is "budget".
+SELECT AVG({fact/budget})
 
 Question:
 What MAQL analytics functions can be applied to LDM facts?
@@ -43,6 +47,8 @@ AVG - calculate average value
 MEDIAN - calculate median value
 
 Question:
-How to calculate count of distinct values in LDM attribute with ID attribute1?
+Write a MAQL metric calculating count of distinct values in LDM attribute customer name?
 Answer:
-SELECT COUNT({attribute/attribute1})
+First we analyze LDM and find ID of attribute with title closest to "customer name".
+Let's say it is "customer_name".
+SELECT COUNT({attribute/customer_name})

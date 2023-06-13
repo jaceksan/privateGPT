@@ -1,4 +1,4 @@
-This document relates to GoodData 2.0.
+This document relates to "GoodData Tiger platform".
 
 Question:
 What is GoodData workspace?

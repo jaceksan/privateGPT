@@ -2,39 +2,71 @@ This document relates to "GoodData Tiger platform".
 
 This document contains GoodData logical data model (LDM) for workspace with ID "demo" and with title "0. QA1 Parent - do not delete".
 
+Question: what datasets exists in this LDM?
+Answer:
 Dataset with ID "campaign_channels" has title "Campaign channels".
+Dataset with ID "campaigns" has title "Campaigns".
+Dataset with ID "customers" has title "Customers".
+Dataset with ID "order_lines" has title "Order lines".
+Dataset with ID "products" has title "Products".
+
+Question: what facts are in dataset with ID "campaign_channels"?
+Answer:
 Dataset with ID "campaign_channels" has the following facts:
 - Fact with ID "budget" has title "Budget"
 - Fact with ID "spend" has title "Spend"
+
+Question: what facts are in dataset with ID "campaigns"?
+Dataset with ID "campaigns" has no facts.
+
+Question: what facts are in dataset with ID "customers"?
+Dataset with ID "customers" has no facts.
+
+Question: what facts are in dataset with ID "order_lines"?
+Answer:
+Dataset with ID "order_lines" has the following facts:
+- Fact with ID "price" has title "Price"
+- Fact with ID "quantity" has title "Quantity"
+
+Question: what facts are in dataset with ID "products"?
+Dataset with ID "products" has no facts.
+
+Question: what attributes are in dataset with ID "campaign_channels"?
+Answer:
 Dataset with ID "campaign_channels" has the following attributes:
 - Attribute with ID "campaign_channel_id" has title "Campaign channel id"
 - Attribute with ID "campaign_channels.category" has title "Category"
 - Attribute with ID "type" has title "Type"
-Dataset with ID "campaigns" has title "Campaigns".
-Dataset with ID "campaigns" has the following facts:
+
+Question: what attributes are in dataset with ID "campaigns"?
+Answer:
 Dataset with ID "campaigns" has the following attributes:
 - Attribute with ID "campaign_id" has title "Campaign id"
 - Attribute with ID "campaign_name" has title "Campaign name"
-Dataset with ID "customers" has title "Customers".
-Dataset with ID "customers" has the following facts:
+
+Question: what attributes are in dataset with ID "customers"?
+Answer:
 Dataset with ID "customers" has the following attributes:
 - Attribute with ID "customer_id" has title "Customer id"
 - Attribute with ID "customer_name" has title "Customer name"
 - Attribute with ID "region" has title "Region"
 - Attribute with ID "state" has title "State"
-Dataset with ID "order_lines" has title "Order lines".
-Dataset with ID "order_lines" has the following facts:
-- Fact with ID "price" has title "Price"
-- Fact with ID "quantity" has title "Quantity"
+
+Question: what attributes are in dataset with ID "order_lines"?
+Answer:
 Dataset with ID "order_lines" has the following attributes:
 - Attribute with ID "order_id" has title "Order id"
 - Attribute with ID "order_line_id" has title "Order line id"
 - Attribute with ID "order_status" has title "Order status"
 - Attribute with ID "wdf__region" has title "Wdf  region"
 - Attribute with ID "wdf__state" has title "Wdf  state"
-Dataset with ID "products" has title "Products".
-Dataset with ID "products" has the following facts:
+
+Question: what attributes are in dataset with ID "products"?
+Answer:
 Dataset with ID "products" has the following attributes:
 - Attribute with ID "product_id" has title "Product id"
 - Attribute with ID "product_name" has title "Product name"
 - Attribute with ID "products.category" has title "Category"
+
+Question: what is the title of the dataset with ID "campaign_channels"?
+Answer: the title is "Campaign channels"

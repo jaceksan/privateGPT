@@ -16,11 +16,12 @@ The main script privateGPT.py is extended accordingly, prompting LLM in various 
 
 There are new arguments available in privateGPT.py:
 ```shell
-python privateGPT.py -p 16 -w demo -r gooddata
+python privateGPT.py -p 8 -w demo -r gooddata
 ```
 
 - -p
-  - force privateGPT to use 16 threads to utilize all HW resources
+  - force privateGPT to use 8 threads to utilize all HW resources
+  - be careful. E.g. t14s Ryzen 7 has 16 threads, but the best performance is with setting 8 threads.
 - -w
   - force privateGPT to work only in the context of workspace with ID=demo
 - -r 
