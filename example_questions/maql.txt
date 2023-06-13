@@ -1,1 +1,0 @@
-I am now working with GoodData workspace "jacek_tpch_1g". Write a MAQL metric which calculate number of values in attribute "L shipinstruct".

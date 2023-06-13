@@ -23,15 +23,19 @@ model_path = os.environ.get("MODEL_PATH")
 model_n_ctx = os.environ.get("MODEL_N_CTX")
 target_source_chunks = int(os.environ.get("TARGET_SOURCE_CHUNKS", 4))
 
-PREFIX_PROMPT = """
-Questions will relate to GoodData company, specifically to their logical data model and MAQL language.
-You should prefer sources stored in local vector database.
-"""
-
 
 def main():
     # Parse the command line arguments
     args = parse_arguments()
+    workspace_id = args.workspace_id
+    prefix_prompt = f"""
+    Context:
+    You are a data engineer writing metrics also known as measures.
+    You exclusively use \"GoodData Tiger platform\".
+    You write metrics with GoodData MAQL language and GoodData logical data model (LDM).
+    You can get answers about the GoodData logical data model.
+    You use GoodData logical data model (LDM) from specific GoodData workspace with ID=\"{workspace_id}\". 
+    """
     embeddings = HuggingFaceEmbeddings(model_name=embeddings_model_name)
     db = Chroma(persist_directory=persist_directory, embedding_function=embeddings, client_settings=CHROMA_SETTINGS)
     retriever = db.as_retriever(search_kwargs={"k": target_source_chunks})
@@ -68,12 +72,11 @@ def main():
         if query == "exit":
             break
         elif not query.strip():
-            print("\nEmpty query, do not execute it.")
             continue
 
         # Get the answer from the chain
         start = time()
-        res = qa(f"{PREFIX_PROMPT}\n{query}")
+        res = qa(f"{prefix_prompt}\nQuestion:\n{query}")
         answer, docs = res["result"], [] if args.hide_source else res["source_documents"]
 
         # Print the result
@@ -116,6 +119,12 @@ def parse_arguments():
         "-p", "--parallelism", type=int,
         help=f"How many threads can be used? Default={psutil.cpu_count(logical=False)}",
         default=psutil.cpu_count(logical=False)
+    )
+
+    parser.add_argument(
+        "-w", "--workspace-id",
+        help=f"GoodData workspace ID. All answers will be generated in the context of this workspace",
+        default="demo"
     )
 
     return parser.parse_args()

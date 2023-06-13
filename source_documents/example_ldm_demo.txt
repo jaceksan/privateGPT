@@ -1,4 +1,7 @@
-This is an example of GoodData logical data model (LDM) for workspace with ID "demo" and with title "0. QA1 Parent - do not delete":
+This document relates to "GoodData Tiger platform".
+
+This document contains GoodData logical data model (LDM) for workspace with ID "demo" and with title "0. QA1 Parent - do not delete".
+
 Dataset with ID "campaign_channels" has title "Campaign channels".
 Dataset with ID "campaign_channels" has the following facts:
 - Fact with ID "budget" has title "Budget"

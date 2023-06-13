@@ -1,3 +1,5 @@
+This document relates to GoodData 2.0.
+
 Question:
 What is GoodData workspace?
 Answer:

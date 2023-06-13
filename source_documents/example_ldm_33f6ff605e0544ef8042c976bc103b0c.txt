@@ -1,4 +1,7 @@
-This is an example of GoodData logical data model (LDM) for workspace with ID "33f6ff605e0544ef8042c976bc103b0c" and with title "jacek_tpch_1g":
+This document relates to "GoodData Tiger platform".
+
+This document contains GoodData logical data model (LDM) for workspace with ID "33f6ff605e0544ef8042c976bc103b0c" and with title "jacek_tpch_1g".
+
 Dataset with ID "customer" has title "Customer".
 Dataset with ID "customer" has the following facts:
 - Fact with ID "c_acctbal" has title "C acctbal"
