@@ -48,17 +48,38 @@ def main():
         lines = [
             "This document relates to \"GoodData Tiger platform\".\n\n" +
             f"This document contains GoodData logical data model (LDM) for workspace" +
-            f" with ID \"{workspace.id}\" and with title \"{workspace.name}\".\n\n"
+            f" with ID \"{workspace.id}\" and with title \"{workspace.name}\".\n"
         ]
         with open(f"source_documents/example_ldm_{workspace.id}.txt", "w") as fp:
+            lines.append("\nQuestion: what datasets exists in this LDM?\n")
+            lines.append("Answer:\n")
             for dataset in ldm.ldm.datasets:
                 lines.append(f"Dataset with ID \"{dataset.id}\" has title \"{dataset.title}\".\n")
-                lines.append(f"Dataset with ID \"{dataset.id}\" has the following facts:\n")
-                for fact in dataset.facts:
-                    lines.append(f"- Fact with ID \"{fact.id}\" has title \"{fact.title}\"\n")
-                lines.append(f"Dataset with ID \"{dataset.id}\" has the following attributes:\n")
-                for attribute in dataset.attributes:
-                    lines.append(f"- Attribute with ID \"{attribute.id}\" has title \"{attribute.title}\"\n")
+
+            for dataset in ldm.ldm.datasets:
+                lines.append(f"\nQuestion: what facts are in dataset with ID \"{dataset.id}\"?\n")
+                if len(dataset.facts) > 0:
+                    lines.append("Answer:\n")
+                    lines.append(f"Dataset with ID \"{dataset.id}\" has the following facts:\n")
+                    for fact in dataset.facts:
+                        lines.append(f"- Fact with ID \"{fact.id}\" has title \"{fact.title}\"\n")
+                else:
+                    lines.append(f"Dataset with ID \"{dataset.id}\" has no facts.\n")
+
+            for dataset in ldm.ldm.datasets:
+                lines.append(f"\nQuestion: what attributes are in dataset with ID \"{dataset.id}\"?\n")
+                if len(dataset.attributes) > 0:
+                    lines.append("Answer:\n")
+                    lines.append(f"Dataset with ID \"{dataset.id}\" has the following attributes:\n")
+                    for attribute in dataset.attributes:
+                        lines.append(f"- Attribute with ID \"{attribute.id}\" has title \"{attribute.title}\"\n")
+                else:
+                    lines.append(f"Dataset with ID \"{dataset.id}\" has no attributes.\n")
+
+            dataset = ldm.ldm.datasets[0]
+            lines.append(f"\nQuestion: what is the title of the dataset with ID \"{dataset.id}\"?\n")
+            lines.append(f"Answer: the title is \"{dataset.title}\"")
+
             fp.writelines(lines)
 
     logging.info("END")
