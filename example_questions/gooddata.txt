@@ -1,0 +1,3 @@
+Write a MAQL metric which calculate number of values in attribute "L shipinstruct".
+
+Give me list of LDM datasets, each with ID and title.
