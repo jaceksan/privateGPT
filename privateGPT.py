@@ -66,32 +66,36 @@ def main():
     )
     # Interactive questions and answers
     while True:
-        query = input("\nEnter a query: ")
-        if query == "exit":
+        try:
+            query = input("\nEnter a query: ")
+            if query == "exit":
+                break
+            elif not query.strip():
+                continue
+
+            # Get the answer from the chain
+            start = time()
+            res = qa(f"{prefix_prompt}\nQuestion:\n{query}")
+            answer, docs = res["result"], [] if args.hide_source else res["source_documents"]
+
+            # Print the result
+            print("\n\n> Question:")
+            print(query)
+            print("\n> Answer:")
+            print(answer)
+            duration = int((time() - start) * 1000)
+            print(f"\n#####################################################################################")
+            print(f"\n> Duration: {duration} ms")
+            print(f"\n#####################################################################################")
+
+            # Print the relevant sources used for the answer
+            if not args.hide_source:
+                for document in docs:
+                    print("\n> " + document.metadata["source"] + ":")
+                    print(document.page_content)
+        except EOFError or KeyboardInterrupt:
+            print("Ending ...")
             break
-        elif not query.strip():
-            continue
-
-        # Get the answer from the chain
-        start = time()
-        res = qa(f"{prefix_prompt}\nQuestion:\n{query}")
-        answer, docs = res["result"], [] if args.hide_source else res["source_documents"]
-
-        # Print the result
-        print("\n\n> Question:")
-        print(query)
-        print("\n> Answer:")
-        print(answer)
-        duration = int((time() - start) * 1000)
-        print(f"\n#####################################################################################")
-        print(f"\n> Duration: {duration} ms")
-        print(f"\n#####################################################################################")
-
-        # Print the relevant sources used for the answer
-        if not args.hide_source:
-            for document in docs:
-                print("\n> " + document.metadata["source"] + ":")
-                print(document.page_content)
 
 
 def parse_arguments():
