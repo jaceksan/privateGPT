@@ -26,6 +26,7 @@ Dataset with ID "lineitem" has the following facts:
 - Fact with ID "l_tax" has title "L tax"
 
 Question: what facts are in dataset with ID "nation"?
+Answer:
 Dataset with ID "nation" has no facts.
 
 Question: what facts are in dataset with ID "orders"?
@@ -39,6 +40,7 @@ Dataset with ID "part" has the following facts:
 - Fact with ID "p_retailprice" has title "P retailprice"
 
 Question: what facts are in dataset with ID "region"?
+Answer:
 Dataset with ID "region" has no facts.
 
 Question: what facts are in dataset with ID "supplier"?

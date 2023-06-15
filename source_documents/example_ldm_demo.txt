@@ -17,9 +17,11 @@ Dataset with ID "campaign_channels" has the following facts:
 - Fact with ID "spend" has title "Spend"
 
 Question: what facts are in dataset with ID "campaigns"?
+Answer:
 Dataset with ID "campaigns" has no facts.
 
 Question: what facts are in dataset with ID "customers"?
+Answer:
 Dataset with ID "customers" has no facts.
 
 Question: what facts are in dataset with ID "order_lines"?
@@ -29,6 +31,7 @@ Dataset with ID "order_lines" has the following facts:
 - Fact with ID "quantity" has title "Quantity"
 
 Question: what facts are in dataset with ID "products"?
+Answer:
 Dataset with ID "products" has no facts.
 
 Question: what attributes are in dataset with ID "campaign_channels"?

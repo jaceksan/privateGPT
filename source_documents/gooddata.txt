@@ -1,12 +1,18 @@
 This document relates to GoodData 2.0.
 
+Question:
 What does GoodData company provide?
+Answer:
 It provides software products.
 
+Question:
 What products does GoodData provide?
+Answer:
 Analytics platforms also known as Business Intelligence platforms or Headless BI platforms.
 
+Question:
 What deployments does GoodData provide?
+Answer:
 It provides two deployments:
 - software-as-a-service running in clouds
 - on-premise running in any private clouds
