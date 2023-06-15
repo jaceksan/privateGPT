@@ -2,12 +2,14 @@
 # -*- coding: utf-8 -*-
 # (C) 2023 GoodData Corporation
 
-from gooddata_sdk import GoodDataSdk
-import logging
 import argparse
+import logging
 import os
-import yaml
 
+import yaml
+from gooddata_sdk import GoodDataSdk
+
+from sd_converter import Converter
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)-8s: %(name)s : %(asctime)-15s - %(message)s")
 
@@ -17,17 +19,19 @@ def parse_arguments():
     parser = argparse.ArgumentParser(
         conflict_handler="resolve",
         description="Generate natural language description for LDM model.",
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
     parser.add_argument(
-        "-gh", "--gooddata-host",
+        "-gh",
+        "--gooddata-host",
         help="Hostname(DNS) where GoodData is running",
-        default=os.getenv("GOODDATA_HOST", "http://localhost:3000")
+        default=os.getenv("GOODDATA_HOST", "http://localhost:3000"),
     )
     parser.add_argument(
-        "-gt", "--gooddata-token",
+        "-gt",
+        "--gooddata-token",
         help="GoodData API token for authentication",
-        default=os.getenv("GOODDATA_TOKEN", "YWRtaW46Ym9vdHN0cmFwOmFkbWluMTIz")
+        default=os.getenv("GOODDATA_TOKEN", "YWRtaW46Ym9vdHN0cmFwOmFkbWluMTIz"),
     )
     return parser.parse_args()
 
@@ -35,6 +39,11 @@ def parse_arguments():
 def main():
     args = parse_arguments()
     logging.info("START")
+
+    converter = Converter()
+    oai_dir = "oai_finetune/"
+    hf_dir = "hf_finetune/"
+    src_dir = "source_documents/"
 
     sdk = GoodDataSdk.create(host_=args.gooddata_host, token_=args.gooddata_token)
 
@@ -46,41 +55,54 @@ def main():
         workspace = sdk.catalog_workspace.get_workspace(workspace_id)
         ldm = sdk.catalog_workspace_content.get_declarative_ldm(workspace_id)
         lines = [
-            "This document relates to \"GoodData Tiger platform\".\n\n" +
-            f"This document contains GoodData logical data model (LDM) for workspace" +
-            f" with ID \"{workspace.id}\" and with title \"{workspace.name}\".\n"
+            'This document relates to "GoodData Tiger platform".\n\n'
+            + "This document contains GoodData logical data model (LDM) for workspace"
+            + f' with ID "{workspace.id}" and with title "{workspace.name}".\n'
         ]
-        with open(f"source_documents/example_ldm_{workspace.id}.txt", "w") as fp:
+        common_filename = f"example_ldm_{workspace.id}"
+        txt_file = os.path.join(src_dir, (common_filename + ".txt"))
+        with open(txt_file, "w") as fp:
             lines.append("\nQuestion: what datasets exists in this LDM?\n")
             lines.append("Answer:\n")
             for dataset in ldm.ldm.datasets:
-                lines.append(f"Dataset with ID \"{dataset.id}\" has title \"{dataset.title}\".\n")
+                lines.append(f'Dataset with ID "{dataset.id}" has title "{dataset.title}".\n')
 
             for dataset in ldm.ldm.datasets:
-                lines.append(f"\nQuestion: what facts are in dataset with ID \"{dataset.id}\"?\n")
+                lines.append(f'\nQuestion: what facts are in dataset with ID "{dataset.id}"?\n')
                 if len(dataset.facts) > 0:
                     lines.append("Answer:\n")
-                    lines.append(f"Dataset with ID \"{dataset.id}\" has the following facts:\n")
+                    lines.append(f'Dataset with ID "{dataset.id}" has the following facts:\n')
                     for fact in dataset.facts:
-                        lines.append(f"- Fact with ID \"{fact.id}\" has title \"{fact.title}\"\n")
+                        lines.append(f'- Fact with ID "{fact.id}" has title "{fact.title}"\n')
                 else:
-                    lines.append(f"Dataset with ID \"{dataset.id}\" has no facts.\n")
+                    lines.append(f'Dataset with ID "{dataset.id}" has no facts.\n')
 
             for dataset in ldm.ldm.datasets:
-                lines.append(f"\nQuestion: what attributes are in dataset with ID \"{dataset.id}\"?\n")
+                lines.append(f'\nQuestion: what attributes are in dataset with ID "{dataset.id}"?\n')
                 if len(dataset.attributes) > 0:
                     lines.append("Answer:\n")
-                    lines.append(f"Dataset with ID \"{dataset.id}\" has the following attributes:\n")
+                    lines.append(f'Dataset with ID "{dataset.id}" has the following attributes:\n')
                     for attribute in dataset.attributes:
-                        lines.append(f"- Attribute with ID \"{attribute.id}\" has title \"{attribute.title}\"\n")
+                        lines.append(f'- Attribute with ID "{attribute.id}" has title "{attribute.title}"\n')
                 else:
-                    lines.append(f"Dataset with ID \"{dataset.id}\" has no attributes.\n")
+                    lines.append(f'Dataset with ID "{dataset.id}" has no attributes.\n')
 
             dataset = ldm.ldm.datasets[0]
-            lines.append(f"\nQuestion: what is the title of the dataset with ID \"{dataset.id}\"?\n")
-            lines.append(f"Answer: the title is \"{dataset.title}\"")
+            lines.append(f'\nQuestion: what is the title of the dataset with ID "{dataset.id}"?\n')
+            lines.append(f'Answer: the title is "{dataset.title}"')
 
             fp.writelines(lines)
+
+        converter.convert(
+            input_file=txt_file,
+            output_file=os.path.join(oai_dir, (common_filename + ".jsonl")),
+            format="oai",
+        )
+        converter.convert(
+            input_file=txt_file,
+            output_file=os.path.join(hf_dir, (common_filename + ".jsonl")),
+            format="hf",
+        )
 
     logging.info("END")
 

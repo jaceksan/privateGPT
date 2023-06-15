@@ -32,16 +32,28 @@ class Converter:
             List[Tuple[str, str]]: A list of Question-Answer pairs.
         """
 
-        with open(input_file, "r") as file:
-            text = file.read()
-        entries = text.split("Question:")
+        try:
+            with open(input_file, "r") as file:
+                text = file.read()
+            entries = text.split("Question:")
 
-        qa_pairs = []
-        for entry in entries[1:]:
-            question, answer = entry.split("Answer:")
-            question = question.strip()
-            answer = answer.strip()
-            qa_pairs.append((answer, question))
+            if len(entries) == 1:
+                raise ValueError(f"No 'Question:' found in the input file: {input_file}")
+
+            qa_pairs = []
+            for entry in entries[1:]:
+                try:
+                    question, answer = entry.split("Answer:")
+                except ValueError:
+                    raise ValueError(f"Missing 'Answer:' keyword in the input file: {input_file}")
+                question = question.strip()
+                answer = answer.strip()
+                qa_pairs.append((answer, question))
+
+        except FileNotFoundError:
+            raise FileNotFoundError(f"File not found: {input_file}")
+        except Exception:
+            raise Exception(f"Invalid file format: {input_file}")
 
         return qa_pairs
 
@@ -75,7 +87,7 @@ class Converter:
         content = []
         for answer, question in qa_pairs:
             # Choices is a list, hence the use of square brackets ([]).
-            qa_pair = {"Question": question, "choices": List[answer]}
+            qa_pair = {"Question": question, "choices": [answer]}
             content.append(json.dumps(qa_pair))
         return content
 
@@ -86,13 +98,13 @@ class Converter:
         Args:
             input_file (str): Path to the input file.
             output_file (str): Path to the output file.
-            format (str): Conversion format (Jsonl or choices).
+            format (str): Conversion format (oai or hf).
         """
         if not os.path.isfile(input_file):
             raise Exception("Input file does not exist!")
 
         if os.path.isfile(output_file):
-            print(f"Output file: {output_file} exists, overwriting.")
+            print(f"Output file: {output_file} exists. Overwriting.")
 
         qa_pairs = self._parse_input_file(input_file)
 
