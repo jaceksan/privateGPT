@@ -6,9 +6,6 @@ from typing import List, Tuple
 class Converter:
     """A class to represent a converter for AI fine-tuning notations."""
 
-    def __init__(self):
-        return
-
     def _to_file(self, output_file: str, content: List[str]) -> None:
         """
         Writes the content to a target file.
@@ -70,7 +67,7 @@ class Converter:
 
         content = []
         for answer, question in qa_pairs:
-            qa_pair = {"question": question, "answer": answer}
+            qa_pair = {"prompt": question, "completion": answer}
             content.append(json.dumps(qa_pair))
         return content
 
@@ -87,7 +84,7 @@ class Converter:
         content = []
         for answer, question in qa_pairs:
             # Choices is a list, hence the use of square brackets ([]).
-            qa_pair = {"Question": question, "choices": [answer]}
+            qa_pair = {"choices": [answer], "query": question}
             content.append(json.dumps(qa_pair))
         return content
 
@@ -110,11 +107,12 @@ class Converter:
 
         match format:
             case "oai":
-                self._to_file(output_file=output_file, content=self._to_oai(qa_pairs=qa_pairs))
+                content = self._to_oai(qa_pairs=qa_pairs)
             case "hf":
-                self._to_file(output_file=output_file, content=self._to_hf(qa_pairs=qa_pairs))
+                content = self._to_hf(qa_pairs=qa_pairs)
             case _:
                 raise Exception("Wrong format argument")
+        self._to_file(output_file=output_file, content=content)
 
 
 if __name__ == "__main__":

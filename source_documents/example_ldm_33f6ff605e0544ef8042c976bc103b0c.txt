@@ -2,7 +2,8 @@ This document relates to "GoodData Tiger platform".
 
 This document contains GoodData logical data model (LDM) for workspace with ID "33f6ff605e0544ef8042c976bc103b0c" and with title "jacek_tpch_1g".
 
-Question: what datasets exists in this LDM?
+Question:
+What datasets exists in this LDM?
 Answer:
 Dataset with ID "customer" has title "Customer".
 Dataset with ID "lineitem" has title "Lineitem".
@@ -12,12 +13,14 @@ Dataset with ID "part" has title "Part".
 Dataset with ID "region" has title "Region".
 Dataset with ID "supplier" has title "Supplier".
 
-Question: what facts are in dataset with ID "customer"?
+Question:
+What facts are in dataset with ID "customer"?
 Answer:
 Dataset with ID "customer" has the following facts:
 - Fact with ID "c_acctbal" has title "C acctbal"
 
-Question: what facts are in dataset with ID "lineitem"?
+Question:
+What facts are in dataset with ID "lineitem"?
 Answer:
 Dataset with ID "lineitem" has the following facts:
 - Fact with ID "l_discount" has title "L discount"
@@ -25,30 +28,36 @@ Dataset with ID "lineitem" has the following facts:
 - Fact with ID "l_quantity" has title "L quantity"
 - Fact with ID "l_tax" has title "L tax"
 
-Question: what facts are in dataset with ID "nation"?
+Question:
+What facts are in dataset with ID "nation"?
 Answer:
 Dataset with ID "nation" has no facts.
 
-Question: what facts are in dataset with ID "orders"?
+Question:
+What facts are in dataset with ID "orders"?
 Answer:
 Dataset with ID "orders" has the following facts:
 - Fact with ID "o_totalprice" has title "O totalprice"
 
-Question: what facts are in dataset with ID "part"?
+Question:
+What facts are in dataset with ID "part"?
 Answer:
 Dataset with ID "part" has the following facts:
 - Fact with ID "p_retailprice" has title "P retailprice"
 
-Question: what facts are in dataset with ID "region"?
+Question:
+What facts are in dataset with ID "region"?
 Answer:
 Dataset with ID "region" has no facts.
 
-Question: what facts are in dataset with ID "supplier"?
+Question:
+What facts are in dataset with ID "supplier"?
 Answer:
 Dataset with ID "supplier" has the following facts:
 - Fact with ID "s_acctbal" has title "S acctbal"
 
-Question: what attributes are in dataset with ID "customer"?
+Question:
+What attributes are in dataset with ID "customer"?
 Answer:
 Dataset with ID "customer" has the following attributes:
 - Attribute with ID "c_address" has title "C address"
@@ -58,7 +67,8 @@ Dataset with ID "customer" has the following attributes:
 - Attribute with ID "c_name" has title "C name"
 - Attribute with ID "c_phone" has title "C phone"
 
-Question: what attributes are in dataset with ID "lineitem"?
+Question:
+What attributes are in dataset with ID "lineitem"?
 Answer:
 Dataset with ID "lineitem" has the following attributes:
 - Attribute with ID "l_comment" has title "L comment"
@@ -68,14 +78,16 @@ Dataset with ID "lineitem" has the following attributes:
 - Attribute with ID "l_shipinstruct" has title "L shipinstruct"
 - Attribute with ID "l_shipmode" has title "L shipmode"
 
-Question: what attributes are in dataset with ID "nation"?
+Question:
+What attributes are in dataset with ID "nation"?
 Answer:
 Dataset with ID "nation" has the following attributes:
 - Attribute with ID "n_comment" has title "N comment"
 - Attribute with ID "n_name" has title "N name"
 - Attribute with ID "n_nationkey" has title "N nationkey"
 
-Question: what attributes are in dataset with ID "orders"?
+Question:
+What attributes are in dataset with ID "orders"?
 Answer:
 Dataset with ID "orders" has the following attributes:
 - Attribute with ID "o_clerk" has title "O clerk"
@@ -85,7 +97,8 @@ Dataset with ID "orders" has the following attributes:
 - Attribute with ID "o_orderstatus" has title "O orderstatus"
 - Attribute with ID "o_shippriority" has title "O shippriority"
 
-Question: what attributes are in dataset with ID "part"?
+Question:
+What attributes are in dataset with ID "part"?
 Answer:
 Dataset with ID "part" has the following attributes:
 - Attribute with ID "p_brand" has title "P brand"
@@ -97,14 +110,16 @@ Dataset with ID "part" has the following attributes:
 - Attribute with ID "p_size" has title "P size"
 - Attribute with ID "p_type" has title "P type"
 
-Question: what attributes are in dataset with ID "region"?
+Question:
+What attributes are in dataset with ID "region"?
 Answer:
 Dataset with ID "region" has the following attributes:
 - Attribute with ID "r_comment" has title "R comment"
 - Attribute with ID "r_name" has title "R name"
 - Attribute with ID "r_regionkey" has title "R regionkey"
 
-Question: what attributes are in dataset with ID "supplier"?
+Question:
+What attributes are in dataset with ID "supplier"?
 Answer:
 Dataset with ID "supplier" has the following attributes:
 - Attribute with ID "s_address" has title "S address"
@@ -113,5 +128,7 @@ Dataset with ID "supplier" has the following attributes:
 - Attribute with ID "s_phone" has title "S phone"
 - Attribute with ID "s_suppkey" has title "S suppkey"
 
-Question: what is the title of the dataset with ID "customer"?
-Answer: the title is "Customer"
+Question:
+What is the title of the dataset with ID "customer"?
+Answer:
+The title is "Customer".
