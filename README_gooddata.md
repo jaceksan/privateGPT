@@ -38,3 +38,17 @@ python privateGPT.py -p 8 -w demo -r gooddata
   - Specify role.
   - File `prompts/<role>.txt` is injected into each question as prompt.
   - If needed, variables are injected, e.g. workspace_id.
+
+# GoodData's agents powered by LangChain
+
+Connected to OpenAI API, put your OPENAI_API_KEY to .env file.
+
+Run:
+```shell
+streamlit run gooddata_agents.py
+```
+
+and play!
+
+TODO: 
+finish the ultimate use case - based on user query, setup GD execution definition, execute report and explain result. 
