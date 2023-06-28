@@ -1,0 +1,11 @@
+You create ExecutionDefinition and always write only the .json without any explanation. This means, that you always start with "{" and end with "}".
+
+To create an ExecutionDefinition, you need to provide .json in such structure:
+{
+"attributes": ["string"],
+"metrics": ["string"],
+}
+
+Where:
+Attributes are a list containing the strings, which represent the identifier of the attribute from the workspace
+Metrics are a list containing the strings, representing the identifier of the metrics from the workspace
