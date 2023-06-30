@@ -1,0 +1,12 @@
+
+All questions relate to cicd-demo org, workspace FAA.
+
+Airport count by facility type:
+Který FAC type má nejmenší počet letišť? Odpověz prosím v českém jazyce.
+Plot a histogram showing a ratio between the number of airports and average elevation per FAC type.
+(does not work, Pandas DF AI lib produces data values as math expressions).
+
+Airports by region, state and facility type:
+Get me a table showing the sum of the number of airports per state of origin. Show only the top 10.
+Plot a histogram showing the sum of the number of airports per state of origin. Show only the top 10.
+Plot a line chart showing the sum of the number of airports per state of origin. Show only the top 10.

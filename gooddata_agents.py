@@ -8,6 +8,7 @@ from gooddata.sdk_wrapper import GoodDataSdkWrapper
 from gooddata_sdk import GoodDataSdk
 from gooddata.agents.chat import chat_gpt
 from gooddata.agents.pandas_dataframe import pandas_df
+from gooddata.agents.any_to_star_schema import any_to_star_model
 from gooddata.tools import get_name_for_id
 
 
@@ -45,7 +46,7 @@ def render_workspace_picker(sdk: GoodDataSdk):
 def render_agent_picker():
     st.sidebar.selectbox(
         label="Agents:",
-        options=["Data scientist", "Pandas Data Frame"],
+        options=["Data scientist", "Pandas Data Frame", "Any to Star Model"],
         key="agent",
     )
 
@@ -66,8 +67,9 @@ def main():
         chat_gpt()
     elif selected_agent == "Pandas Data Frame":
         pandas_df(sdk, workspace_id)
+    elif selected_agent == "Any to Star Model":
+        any_to_star_model(sdk, logger)
 
 
 if __name__ == "__main__":
     main()
-

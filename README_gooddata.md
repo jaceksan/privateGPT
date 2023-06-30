@@ -41,7 +41,7 @@ python privateGPT.py -p 8 -w demo -r gooddata
 
 # GoodData's agents powered by LangChain
 
-Connected to OpenAI API, put your OPENAI_API_KEY to .env file.
+Connected to OpenAI API, put your OPENAI_API_KEY and OPENAPI_ORG to .env file.
 
 Run:
 ```shell
