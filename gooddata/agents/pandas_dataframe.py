@@ -47,36 +47,39 @@ def write_answer(response_dict: dict):
     Returns:
         None.
     """
-
     # Check if the response is an answer.
     if "answer" in response_dict:
         st.write(response_dict["answer"])
-
     # Check if the response is a bar chart.
-    if "bar" in response_dict:
+    elif "bar" in response_dict:
         data = response_dict["bar"]
         try:
             df = pd.DataFrame(data["data"], columns=data["columns"])
-            df.set_index(data["columns"][0], inplace=True)
+            df.set_index(df.columns.values[0], inplace=True)
+            # TODO - what the fuck? Looks like a Streamlit bug
+            df.index.name = None
             st.bar_chart(df)
-        except ValueError:
-            print(f"Couldn't create DataFrame from data: {data}")
-
+        except ValueError as e:
+            st.error(f"Couldn't create DataFrame from data: {data['data']}\nError: {str(e)}")
     # Check if the response is a line chart.
-    if "line" in response_dict:
+    elif "line" in response_dict:
         data = response_dict["line"]
         try:
             df = pd.DataFrame(data["data"], columns=data["columns"])
-            df.set_index(data["columns"][0], inplace=True)
+            st.write(f"DF columns: {df.columns} - {df.columns.values[0]}")
+            df.set_index(df.columns.values[0], inplace=True)
+            # TODO - what the fuck? Looks like a Streamlit bug
+            df.index.name = None
             st.line_chart(df)
-        except ValueError:
-            print(f"Couldn't create DataFrame from data: {data}")
-
-    # Check if the response is a table.
-    if "table" in response_dict:
+        except ValueError as e:
+            st.error(f"Couldn't create DataFrame from data: {data['data']}\nError: {str(e)}")
+    # Check if the response is a table or if an error occurs.
+    elif "table" in response_dict:
         data = response_dict["table"]
         df = pd.DataFrame(data["data"], columns=data["columns"])
         st.table(df)
+    else:
+        st.error(f"Unexpected response: {response_dict}")
 
 
 @st.cache_data
@@ -103,15 +106,19 @@ def pandas_df(sdk: GoodDataSdkWrapper, workspace_id: str):
     render_insight_picker(sdk.sdk, workspace_id)
     insight_id = st.session_state.get("insight_id")
     if insight_id:
-        df = execute_insight(sdk, workspace_id, insight_id)
-        st.dataframe(df)
-
+        df = execute_insight(sdk, workspace_id, insight_id).reset_index()
+        print(df)
         query = st.text_area("Enter question about this insight:")
         if st.button("Submit Query", type="primary"):
             if query:
                 response = ask_agent(df, query)
                 try:
-                    write_answer(json.loads(response))
+                    # Poor man solution replacing single quotes
+                    answer = json.loads(response.replace("'", "\""))
                 except Exception as e:
-                    st.write(str(e))
+                    st.warning(f"OpenAI did not return JSON: {str(e)}")
                     st.write(response)
+                else:
+                    write_answer(answer)
+
+        st.dataframe(df)

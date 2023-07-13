@@ -1,5 +1,5 @@
 
-All questions relate to cicd-demo org, workspace FAA.
+The following questions relate to cicd-demo org, workspace FAA.
 
 Airport count by facility type:
 Který FAC type má nejmenší počet letišť? Odpověz prosím v českém jazyce.
@@ -7,6 +7,15 @@ Plot a histogram showing a ratio between the number of airports and average elev
 (does not work, Pandas DF AI lib produces data values as math expressions).
 
 Airports by region, state and facility type:
-Get me a table showing the sum of the number of airports per state of origin. Show only the top 10.
+Give me a table showing the sum of the number of airports per state of origin. Show only the top 10.
 Plot a histogram showing the sum of the number of airports per state of origin. Show only the top 10.
 Plot a line chart showing the sum of the number of airports per state of origin. Show only the top 10.
+
+The following questions relate to the demo workspace we provide for free:
+
+Campaign spend:
+In which campaign channel category we spend most money, bro?
+Plot a histogram showing the sum of spend money per category. Show only the top 10.
+
+Revenue Trend:
+Plot a histogram showing the sum of revenue per year.
