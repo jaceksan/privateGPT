@@ -67,7 +67,7 @@ def report_executor(workspace_id: str):
     query = st.text_area("Enter question:")
     if st.button("Submit Query", type="primary"):
         if query:
-            answer = agent.ask(workspace_id, query)
+            answer = agent.ask(query)
             df, attributes, metrics = agent.execute_report(workspace_id, answer)
             if chart_type == "Bar chart":
                 df.reset_index(inplace=True)

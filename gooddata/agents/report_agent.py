@@ -232,14 +232,14 @@ class ReportAgent:
             fp.write(f"Attributes: {str(attribute_list)}\n")
         return TextLoader(str(file_path))
 
-    def ask_langchain_open_ai(self, workspace_id: str, question: str) -> str:
+    def ask_langchain_open_ai(self, question: str) -> str:
         print(
             f"""Asking OpenAI.
               model: {self.openAIModel.value}
               method: {self.method.value}"""
         )
 
-        loader = self.get_workspace_loader(workspace_id, "tmp", f"report_agent_{workspace_id}.txt")
+        loader = self.get_workspace_loader(self.workspace_id, "tmp", f"report_agent_{self.workspace_id}.txt")
         index = VectorstoreIndexCreator().from_loaders([loader])
 
         chain = RetrievalQA.from_chain_type(
@@ -249,14 +249,14 @@ class ReportAgent:
 
         return chain.run(self.get_langchain_query(question))
 
-    def ask(self, workspace_id: str, question: str) -> str:
+    def ask(self, question: str) -> str:
         match self.method:
             case self.AIMethod.FUNC:
                 return self.ask_func_open_ai(question)
             case self.AIMethod.RAW:
                 return self.ask_open_ai_raw(question)
             case self.AIMethod.LANGCHAIN:
-                return self.ask_langchain_open_ai(workspace_id, question)
+                return self.ask_langchain_open_ai(question)
 
             case _:
                 print("No method found, defaulting to RAW")
