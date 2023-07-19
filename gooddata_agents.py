@@ -60,6 +60,11 @@ def render_chart_type_picker():
     )
 
 
+@st.cache_data
+def execute_report(_agent, workspace_id, answer):
+    return _agent.execute_report(workspace_id, answer)
+
+
 def report_executor(workspace_id: str):
     render_chart_type_picker()
     chart_type = st.session_state.get("chart_type")
@@ -68,9 +73,12 @@ def report_executor(workspace_id: str):
     if st.button("Submit Query", type="primary"):
         if query:
             answer = agent.ask(query)
-            df, attributes, metrics = agent.execute_report(workspace_id, answer)
+            df, attributes, metrics = execute_report(agent, workspace_id, answer)
             if chart_type == "Bar chart":
-                df.reset_index(inplace=True)
+                print(df)
+                df.set_index(df.columns.values[0], inplace=True)
+                # TODO - what the fuck? Looks like a Streamlit bug
+                df.index.name = None
                 print(df)
                 st.bar_chart(df)
             else:

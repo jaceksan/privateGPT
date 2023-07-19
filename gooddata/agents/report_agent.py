@@ -92,14 +92,18 @@ class ReportAgent:
         gp = GoodPandas.create_from_profile(profile="default", profiles_path=self.path_to_profiles)
         frames = gp.data_frames(workspace_id)
 
-        exec_def = ExecutionDefinition(
-            attributes=[Attribute(local_id=attr, label=attr) for attr in exdef["attributes"]],
-            metrics=[SimpleMetric(local_id=metr, item=ObjId(metr, type="metric")) for metr in exdef["metrics"]],
-            dimensions=[[attr for attr in exdef["attributes"]], ["measureGroup"]],
-            filters=[],
-        )
-
-        df, df_metadata = frames.for_exec_def(exec_def=exec_def)
+        # attributes = [Attribute(local_id=attr, label=attr) for attr in exdef["attributes"]]
+        # metrics = [SimpleMetric(local_id=metr, item=ObjId(metr, type="metric")) for metr in exdef["metrics"]]
+        # exec_def = ExecutionDefinition(
+        #     attributes=attributes,
+        #     metrics=metrics,
+        #     dimensions=[[attr for attr in exdef["attributes"]], ["measureGroup"]],
+        #     filters=[],
+        # )
+        # df, df_metadata = frames.for_exec_def(exec_def=exec_def)
+        attributes = {attr: Attribute(local_id=attr, label=attr) for attr in exdef["attributes"]}
+        metrics = {metr: SimpleMetric(local_id=metr, item=ObjId(metr, type="metric")) for metr in exdef["metrics"]}
+        df = frames.for_items(items={**attributes, **metrics}, auto_index=False)
         return df, exdef["attributes"], exdef["metrics"]
 
     def get_langchain_query(self, question: str) -> str:
