@@ -10,6 +10,7 @@ from gooddata.agents.chat import chat_gpt
 from gooddata.agents.pandas_dataframe import pandas_df
 from gooddata.agents.any_to_star_schema import any_to_star_model
 from gooddata.agents.report_agent import ReportAgent
+from gooddata.agents.api_agent import ApiAgent
 from gooddata.tools import get_name_for_id
 
 
@@ -47,7 +48,7 @@ def render_workspace_picker(sdk: GoodDataSdk):
 def render_agent_picker():
     st.sidebar.selectbox(
         label="Agents:",
-        options=["Data scientist", "Pandas Data Frame", "Any to Star Model", "Report executor"],
+        options=["Data scientist", "Pandas Data Frame", "Any to Star Model", "Report executor", "API executor"],
         key="agent",
     )
 
@@ -85,6 +86,15 @@ def report_executor(workspace_id: str):
                 st.dataframe(df)
 
 
+def api_executor(workspace_id: str):
+    agent = ApiAgent(workspace_id)
+    query = st.text_area("Enter question:")
+    if st.button("Submit Query", type="primary"):
+        if query:
+            answer = agent.ask(query)
+            st.write(f"Answer: {answer}")
+
+
 def main():
     load_dotenv()
     st.set_page_config(layout="wide", page_icon="favicon.ico", page_title="Talk with your GoodData")
@@ -105,6 +115,8 @@ def main():
         any_to_star_model(sdk, logger)
     elif selected_agent == "Report executor":
         report_executor(workspace_id)
+    elif selected_agent == "API executor":
+        api_executor(workspace_id)
 
 
 if __name__ == "__main__":
