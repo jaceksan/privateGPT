@@ -13,40 +13,12 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 openai.organization = os.getenv("OPENAI_ORG")
 
 
-RESULT_TYPES = {
-    "SQL statements": """
-Question:
-Write a set of SQL statements, each in a separate code snippet.
-There should be one DDL SQL statement for each target table.
-There should be one DML SQL statement for each target table transferring data from corresponding source tables.
-""",
-    "dbt models": """
-Question:
-Write a set of dbt models, each in a separate code snippet.
-There should be one dbt model for each target table transferring data from corresponding source tables.
-"""
-}
-
-
 def load_chain(model_name: str) -> ConversationChain:
     """Logic for loading the chain you want to use should go here."""
     llm = ChatOpenAI(temperature=0, model_name=model_name)
 
     chain = ConversationChain(llm=llm)
     return chain
-
-
-def query_openai(model_name: str, prompt: str):
-    return openai.Completion.create(
-        model=model_name,
-        prompt=prompt,
-        temperature=0,
-        max_tokens=150,
-        top_p=1.0,
-        frequency_penalty=0.0,
-        presence_penalty=0.0,
-        stop=["#", ";"]
-    )
 
 
 @st.cache_data
@@ -102,15 +74,28 @@ def scan_data_source(_sdk: GoodDataSdk, _logger, data_source_id: str) -> Catalog
     return result
 
 
-def generate_question_from_model(pdm: CatalogScanResultPdm) -> str:
+def generate_list_of_source_tables(pdm: CatalogScanResultPdm) -> str:
     result = f"The source tables are:\n"
     # Only 5 tables for demo purposes, large prompt causes slowness
     # TODO - train a LLM model with PDM model once and utilize it
-    # for table in pdm.pdm.tables:
-    for i in range(5):
-        table = pdm.pdm.tables[i]
+    i = 1
+    for table in pdm.pdm.tables:
         column_list = ", ".join([c.name for c in table.columns])
         result += f"- \"{table.path[-1]}\" with columns {column_list}\n"
+        i += 1
+        if i >= 5:
+            break
+
+    return result
+
+
+@st.cache_data
+def ask_question(_logger, request: str) -> str:
+    start = time()
+    chain = load_chain(st.session_state.openai_model)
+    result = chain.run(input=request)
+    duration = int((time() - start)*1000)
+    _logger.info(f"OpenAI query duration={duration}")
     return result
 
 
@@ -130,18 +115,18 @@ def any_to_star_model(sdk: GoodDataSdkWrapper, logger):
 
             with open("prompts/any_to_star_schema.txt") as fp:
                 prompt = fp.read()
-            request = prompt + generate_question_from_model(pdm) + RESULT_TYPES[st.session_state.result_type]
+            request = prompt + f"""
+
+Question:
+{generate_list_of_source_tables(pdm)}
+Generate {st.session_state.result_type}.
+"""
             with open("tmp_prompt.txt", "w") as fp:
                 fp.write(request)
 
             logger.info(f"OpenAI query START")
-            start = time()
-            # output = query_openai(request, st.session_state.openai_model)
-            chain = load_chain(st.session_state.openai_model)
-            output = chain.run(input=request)
+            output = ask_question(logger, request)
             st.write(output)
-            duration = int((time() - start)*1000)
-            logger.info(f"OpenAI query duration={duration}")
     except openai.error.AuthenticationError as e:
         st.write("OpenAI unknown authentication error")
         st.write(e.json_body)
