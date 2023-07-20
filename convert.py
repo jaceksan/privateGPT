@@ -1,6 +1,6 @@
 import os
 
-from sd_converter import Converter
+from SD_converter import Converter
 
 oai_dir = "oai_finetune/"
 hf_dir = "hf_finetune/"
