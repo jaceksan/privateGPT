@@ -9,7 +9,7 @@ import os
 import yaml
 from gooddata_sdk import GoodDataSdk
 
-from sd_converter import Converter
+from SD_converter import Converter
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)-8s: %(name)s : %(asctime)-15s - %(message)s")
 
